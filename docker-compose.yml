@@ -1,0 +1,58 @@
+version: "3.3"
+
+services:
+  backend-db:
+    image: mysql:8
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    # environment variables to use
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+    # ports to map, YOU CANNOT RUN ANYTHING ELSE ON PORT 3306
+    ports:
+      - 3306:3306
+    # persistant volume
+    volumes:
+      - db_vol:/var/lib/mysql
+    # shared network
+    networks:
+      - backend
+
+  backend-api:
+    image: node:12
+    restart: always
+    working_dir: /usr/src/app
+    command: bash -c "npm install && npm run dev"
+    volumes:
+      - ./backend:/usr/src/app
+    depends_on:
+      - backend-db
+    ports:
+      - 8000:8000
+    networks:
+      - backend
+      - frontend
+
+  frontend-app:
+    image: node:12
+    restart: always
+    working_dir: /usr/src/app
+    command: bash -c "yarn install && yarn start"
+    volumes:
+      - ./frontend:/usr/src/app
+    depends_on:
+      - backend-api
+    ports:
+      - 3000:3000
+    networks:
+      - frontend
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  db_vol:
