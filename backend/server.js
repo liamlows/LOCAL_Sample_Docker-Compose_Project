@@ -27,6 +27,8 @@ const app = express();
 const logger = log({ console: true, file: false, label: config.name });
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cors({
   origin: '*'
 }));
@@ -93,6 +95,21 @@ app.get('/values', (req, res) => {
     }
   });
 });
+
+app.post('/test-post', (req, res ) => {
+  console.log("REQ: ", req);
+  console.log("BODY: " , req.body);
+
+  res.status(200).send("data to send back on post")
+
+});
+
+app.get('/test-get', (req, res ) => {
+
+  res.status(200).send("get to send back")
+
+});
+
 
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
