@@ -8,8 +8,8 @@ const { log, ExpressAPILogMiddleware } = require('@rama41222/node-logger');
 var connection = mysql.createConnection({
   host: 'backend-db',
   port: '3306',
-  user: 'user',
-  password: 'password',
+  user: 'manager',
+  password: 'Password',
   database: 'db'
 });
 
@@ -45,8 +45,8 @@ app.get('/', (req, res) => {
 });
 
 
-//POST /setupdb
-app.post('/setupdb', (req, res) => {
+//POST /reset
+app.post('/reset', (req, res) => {
   connection.query('drop table if exists test_table', function (err, rows, fields) {
     if (err)
       logger.error("Can't drop table");
@@ -54,10 +54,6 @@ app.post('/setupdb', (req, res) => {
   connection.query('CREATE TABLE `db`.`test_table` (`id` INT NOT NULL AUTO_INCREMENT, `value` VARCHAR(45), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);', function (err, rows, fields) {
     if (err)
       logger.error("Problem creating the table test_table");
-  });
-  connection.query('INSERT INTO `db`.`test_table` (`value`) VALUES (\'4\');', function(err, rows, fields) {
-      if(err)
-        logger.error('adding row to table failed');
   });
   res.status(200).send('created the table');
 });
@@ -78,7 +74,7 @@ app.post('/multplynumber', (req, res) => {
 
 //GET /checkdb
 app.get('/values', (req, res) => {
-  connection.query('SELECT value from test_table', function (err, rows, fields) {
+  connection.query('SELECT value FROM `db`.`test_table`', function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query");
       res.status(400).json({

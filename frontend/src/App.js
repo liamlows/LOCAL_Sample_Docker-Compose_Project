@@ -10,15 +10,17 @@ class App extends React.Component {
       number: "",
       values: []
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
+  // handle input field state change
+  handleChange = (e) => {
     this.setState({number: e.target.value})
   }
 
-  handleSubmit(e){
+  // handle input form submission to backend via POST request
+  handleSubmit = (e) => {
     e.preventDefault();
     let prod = this.state.number * this.state.number;
     axios.post('http://localhost:8000/multplynumber', {product: prod}).then(res => {
@@ -28,17 +30,20 @@ class App extends React.Component {
     this.setState({number: ""});
   }
 
-  initSetup = () => {
-    axios.post('http://localhost:8000/setupdb').then(res => {
+  // handle intialization and setup of database table, can reinitialize to wipe db
+  reset = () => {
+    axios.post('http://localhost:8000/reset').then(res => {
       console.log(res);
       this.fetchVals();
     });
   }
 
+  // tell app to fetch values from db on first load (if initialized)
   componentDidMount(){
     this.fetchVals();
   }
 
+  // fetches vals of db via GET request
   fetchVals = () => {
     axios.get('http://localhost:8000/values').then(
       res => {
@@ -53,7 +58,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-        <button onClick={this.initSetup}> Initialize DB </button>
+        <button onClick={this.reset}> Initialize DB </button>
           <form onSubmit={this.handleSubmit}>
             <input type="text" value={this.state.number} onChange={this.handleChange}/>
             <br/>
