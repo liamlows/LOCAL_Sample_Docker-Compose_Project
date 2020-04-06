@@ -1,0 +1,11 @@
+.login-layout {
+    margin: 2em;
+}
+
+@media (min-width: 992px) {
+    .login-layout {
+        margin: 2em 18em;
+    }
+}
+
+

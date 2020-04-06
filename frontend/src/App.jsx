@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import axios from 'axios';
 import { Navbar } from './layout/Navbar'
+import { LoginPage } from './login/LoginPage'
 
 class App extends React.Component {
 
@@ -52,24 +53,27 @@ class App extends React.Component {
 
   render(){
     return (
-      <>
-        <Navbar />
-        <div className="App">
-          <header className="App-header">
-          <button onClick={this.initSetup} className="mb-3 btn btn-primary btn-block"> 
-            Initialize DB 
-          </button>
-            <form onSubmit={this.handleSubmit}>
-              <input className="mb-3 form-control" type="text" value={this.state.number} onChange={this.handleChange}/>
-              <input type="submit" value="Submit" className="btn btn-success btn-block"/>
-            </form>
-            <ul>
-              { this.state.values.map((value, i) => <li key={i}>{value.value}</li>) }
-            </ul>
-          </header>
-        </div>
-      </>
-    );
+      <LoginPage />
+    )
+    // return (
+    //   <>
+    //     <Navbar />
+    //     <div className="App">
+    //       <header className="App-header">
+    //       <button onClick={this.initSetup} className="mb-3 btn btn-primary btn-block"> 
+    //         Initialize DB 
+    //       </button>
+    //         <form onSubmit={this.handleSubmit}>
+    //           <input className="mb-3 form-control" type="text" value={this.state.number} onChange={this.handleChange}/>
+    //           <input type="submit" value="Submit" className="btn btn-success btn-block"/>
+    //         </form>
+    //         <ul>
+    //           { this.state.values.map((value, i) => <li key={i}>{value.value}</li>) }
+    //         </ul>
+    //       </header>
+    //     </div>
+    //   </>
+    // );
   }
 
 }

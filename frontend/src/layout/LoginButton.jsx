@@ -1,6 +1,6 @@
 import React from 'react'
 
-export class Login extends React.Component {
+export class LoginButton extends React.Component {
   render() {
     return (
       <ul className="navbar-nav ml-auto">
