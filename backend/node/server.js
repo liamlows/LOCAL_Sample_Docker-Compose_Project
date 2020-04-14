@@ -90,6 +90,104 @@ app.get('/values', (req, res) => {
   });
 });
 
+//ADDING WAREHOUSE APIS HERE
+
+//GET PASSWORD FOR A USERNAME
+// /users/username
+app.get('/users/:username', (req, res) => {
+	var username = req.param('username');
+	connection.query('SELECT passwd FROM `db`.`users` WHERE username = ?', username, function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query again");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+//POST NEW USER
+app.post('/users', (req, res) => {
+  var username = req.param('username');
+	var passwd = req.param('passwd');
+	var email = req.param('email');
+	var firstName = req.param('firstName');
+	var lastName = req.param('lastName');
+
+  connection.query("INSERT INTO `db`.`users` (username, passwd, email, firstName, lastName) VALUES (?,?,?,?,?)", [username, passwd, email, firstName, lastName], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into users table");
+    }
+    else {
+      res.status(200).send(`added ${req.body.product} to the users table!`);
+    }
+  });
+});
+
+//ADD TO INVENTORY
+app.post('/inventory', (req, res) => {
+  var itemName = req.param('itemName');
+	var itemDescription = req.param('itemDescription');
+	var numInStock = req.param('numinStock');
+	var price = req.param('price');
+	var typeID = req.param('typeID');
+	var familySafe = req.param('familySafe');
+	var availableToPackage = req.param('availableToPackage');
+
+  connection.query("INSERT INTO inventory(itemName, itemDescription, numInStock, price, typeID, familySafe, availableToPackage) VALUES (?,?,?,?,?,?,?)", [itemName, itemDescription, numInStock, price, typeID, familySafe, availableToPackage], function (err, rows, fields) {
+    if (err){
+      logger.error("Problem inserting into inventory table");
+    }
+    else {
+      res.status(200).send(`added ${req.body.product} to the inventory table!`);
+    }
+  });
+});
+
+//GET ENTIRE INVENTORY LIST
+app.get('/inventory', (req, res) => {
+
+	connection.query("select i.*, p.productType from inventory i INNER JOIN productTypes p on i.typeID = p.typeID", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+//GET DETAILS ON SPECIFIC ITEM
+app.get('/inventory/:itemName', (req, res) => {
+  var itemName = req.param('itemName');
+	connection.query("SELECT * FROM inventory WHERE itemName = ?", itemName, function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
   if (e) {
