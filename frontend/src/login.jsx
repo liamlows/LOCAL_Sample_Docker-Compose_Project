@@ -6,8 +6,14 @@ export class Login extends React.Component{
     state = {
       username: "",
       password: "",
-      values: []
       };
+
+    constructor(props){
+      super(props);
+      this.state = {
+        values: []
+      };
+    }
 
     // submit(){
     //     //update database with state
@@ -28,12 +34,12 @@ export class Login extends React.Component{
         params: {
           user: this.state.username
         }
-      }).then(response => {
-        this.setState({values: response.data});
-      }).catch((error) => {
-        console.log(error)
-      })
-      //});
+      }).then(
+        res => {
+          const values = res.data;
+          console.log(values.data);
+          this.setState({values: values.data})
+        });
     }
 
     render(){
