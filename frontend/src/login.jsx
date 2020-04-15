@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 export class Login extends React.Component{
     state = {
       username: "",
       password: "",
+      values: []
       };
 
     // submit(){
@@ -19,6 +21,20 @@ export class Login extends React.Component{
     //                    timeToAssemble: '',
     //                    availableToPackage: false});
     // }
+
+    login() {
+      axios.get('http://localhost:8000/users',
+      {
+        params: {
+          user: this.state.username
+        }
+      }).then(response => {
+        this.setState({values: response.data});
+      }).catch((error) => {
+        console.log(error)
+      })
+      //});
+    }
 
     render(){
         return (
@@ -41,11 +57,11 @@ export class Login extends React.Component{
                                 name="itemName"
                                 className="form-control"
                                 value={this.state.password}
-                                onChange={e => this.setState({ password: e.target.value })}/>
+                                onChange={e => this.setState({ password: e.target.value })}
+                                />
                         </div>
-                    <Link to='/inventory'><button type="button" className="btn btn-primary" >Login</button></Link>
+          <button type="button" className="btn btn-primary" onClick={ () => this.login() }>Login</button>
           </div>
-
         );
         //onClick={ () => this.submit() }
         //<Link to='/inventory'></Link>

@@ -94,9 +94,9 @@ app.get('/values', (req, res) => {
 
 //GET PASSWORD FOR A USERNAME
 // /users/username
-app.get('/users/:username', (req, res) => {
-	var username = req.param('username');
-	connection.query('SELECT passwd FROM `db`.`users` WHERE username = ?', username, function (err, rows, fields) {
+app.get('/users', (req, res) => {
+	var user = req.param('user');
+	connection.query('SELECT passwd FROM `db`.`users` WHERE username = ?', user, function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query again");
       res.status(400).json({
