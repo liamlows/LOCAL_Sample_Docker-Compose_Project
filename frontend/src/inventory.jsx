@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 export class Inventory extends React.Component {
   state = {
@@ -47,6 +48,22 @@ class Child extends React.Component {
     name: ""
   };
 
+  constructor(props){
+    super(props);
+    this.state = {
+      values: []
+    };
+  }
+
+  getInventory () {
+    axios.get('http://localhost:8000/inventory').then(
+      res => {
+        const values = res.data;
+        console.log(values.data);
+        this.setState({values: values.data})
+      });
+  }
+
   render() {
     return (
       <>
@@ -63,6 +80,8 @@ class Child extends React.Component {
           Add
         </button>
           <Link to='/login'><button type="button" className="btn btn-primary" >Login</button></Link>
+
+          <button type="button" className="btn btn-primary" onClick={ () => this.getInventory() }>Refresh Inventory</button>
       </>
     );
   }
