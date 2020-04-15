@@ -82,6 +82,11 @@ class Child extends React.Component {
           <Link to='/login'><button type="button" className="btn btn-primary" >Login</button></Link>
 
           <button type="button" className="btn btn-primary" onClick={ () => this.getInventory() }>Refresh Inventory</button>
+          <ul>
+            { this.state.values.map((value, i) => <li key={i}>{value.itemName}</li>) }
+            { this.state.values.map((value, i) => <li key={i}>{value.itemDescription}</li>) }
+            { this.state.values.map((value, i) => <li key={i}>{value.numInStock}</li>) }
+          </ul>
       </>
     );
   }

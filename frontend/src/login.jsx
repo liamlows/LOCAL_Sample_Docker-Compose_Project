@@ -66,7 +66,10 @@ export class Login extends React.Component{
                                 onChange={e => this.setState({ password: e.target.value })}
                                 />
                         </div>
-          <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.login() }>Login</button></Link>
+          <button type="button" className="btn btn-primary" onClick={ () => this.login() }>Login</button>
+          <ul>
+            { this.state.values.map((value, i) => <li key={i}>{value.passwd}</li>) }
+          </ul>
           </div>
         );
         //onClick={ () => this.submit() }
