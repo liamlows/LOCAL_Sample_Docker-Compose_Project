@@ -68,6 +68,9 @@ class Child extends React.Component {
     return (
       <>
        <p> <br /> </p>
+
+       <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
+
        <label for="name">Add an item to the inventory:</label>
         <br />
         <input

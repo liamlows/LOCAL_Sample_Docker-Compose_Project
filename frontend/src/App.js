@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 import React from 'react';
@@ -8,6 +7,10 @@ import {Login} from './login';
 import {Inventory} from './inventory';
 import {Link} from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
+
+//For Warehouse settings and adding an item
+import { SettingsForm } from './settingsForm.jsx';
+import { ItemDetails } from './itemDetails.jsx';
 
 function App() {
   return (
@@ -19,6 +22,7 @@ function App() {
          <Route exact path="/" component={Login} />
         <Route path="/inventory" component={ Inventory} />
           <Route path="/login" component={ Login} />
+          <Route path="/itemDetails" component={ItemDetails}/>
         </Switch>
         </Router>
       </header>
