@@ -33,15 +33,14 @@ export class Inventory extends React.Component {
         <GeneralTable
         items={this.state.values}
         tableClass="table table-bordered table-hover table-sm"
-        emptyMessage="Empty Table"
+        emptyMessage="Click View/Refresh Inventory"
         emptyClass="alert alert-primary"
         showRowHeader={true}
         />
       </ul>
+      <button type="button" className="btn btn-primary" onClick={ () => this.getInventory() }>View/Refresh Inventory</button>
+      <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
       <Link to='/login'><button type="button" className="btn btn-primary" >Logout</button></Link>
-       <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
-
-          <button type="button" className="btn btn-primary" onClick={ () => this.getInventory() }>View/Refresh Inventory</button>
       </>
     );
   }

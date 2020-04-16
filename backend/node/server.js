@@ -132,15 +132,15 @@ app.post('/users', (req, res) => {
 
 //ADD TO INVENTORY
 app.post('/inventory', (req, res) => {
-  var itemName = req.param('itemName');
-	var itemDescription = req.param('itemDescription');
-	var numInStock = req.param('numinStock');
-	var price = req.param('price');
-	var typeID = req.param('typeID');
-	var familySafe = req.param('familySafe');
-	var availableToPackage = req.param('availableToPackage');
+  var itemName = req.body.itemName;
+	var itemDescription = req.body.itemDescription;
+	var numInStock = req.body.numInStock;
+	var price = req.body.price;
+	var itemType = req.body.itemType;
+	var familySafe = req.body.familySafe;
+	var availableToPackage = req.body.availableToPackage;
 
-  connection.query("INSERT INTO inventory(itemName, itemDescription, numInStock, price, typeID, familySafe, availableToPackage) VALUES (?,?,?,?,?,?,?)", [itemName, itemDescription, numInStock, price, typeID, familySafe, availableToPackage], function (err, rows, fields) {
+  connection.query("INSERT INTO inventory(itemName, itemDescription, numInStock, price, itemType, familySafe, availableToPackage) VALUES (?,?,?,?,?,?,?)", [itemName, itemDescription, numInStock, price, itemType, familySafe, availableToPackage], function (err, rows, fields) {
     if (err){
       logger.error("Problem inserting into inventory table");
     }
@@ -153,7 +153,7 @@ app.post('/inventory', (req, res) => {
 //GET ENTIRE INVENTORY LIST
 app.get('/inventory', (req, res) => {
 
-	connection.query("select i.*, p.productType from inventory i INNER JOIN productTypes p on i.typeID = p.typeID", function (err, rows, fields) {
+	connection.query("select * from inventory", function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query for inventory");
       res.status(400).json({

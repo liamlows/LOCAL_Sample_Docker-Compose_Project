@@ -4,18 +4,41 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 export class ItemDetails extends React.Component{
-    state = {itemID: '',
+    state = {
              itemName: '',
              itemDescription: '',
              numInStock: '',
              price: '',
              itemType: '',
-             familySafe: false,
+             familySafe: '',
              timeToAssemble: '',
-             availableToPackage: false
+             availableToPackage: ''
             };
 
-    submit(){
+            constructor(props){
+              super(props);
+              this.state = {
+                values: []
+              };
+            }
+
+            addToInventory = (e) => {
+              axios.post('http://localhost:8000/inventory',{
+                  itemName : this.state.itemName,
+                  itemDescription : this.state.itemDescription,
+                  numInStock : this.state.numInStock,
+                  price : this.state.price,
+                  itemType : "kitchen",
+                  familySafe : this.state.familySafe,
+                  availableToPackage : this.state.availableToPackage
+              }).then(
+                res => {
+                  console.log(res);
+                  this.reset();
+                });
+            }
+
+    reset(){
         //update database with state
         this.setState({itemID: '',
                        itemName: '',
@@ -23,9 +46,9 @@ export class ItemDetails extends React.Component{
                        numInStock: '',
                        price: '',
                        itemType: '',
-                       familySafe: false,
+                       familySafe: '',
                        timeToAssemble: '',
-                       availableToPackage: false});
+                       availableToPackage: ''});
     }
 
     render(){
@@ -98,7 +121,7 @@ export class ItemDetails extends React.Component{
 
                         <div className="form-group col">
                             <label htmlFor="state">Family Safe</label>
-                            <input type="checkbox"
+                            <input type="text"
                                 id="familySafe"
                                 name="familySafe"
                                 className="form-control"
@@ -108,7 +131,7 @@ export class ItemDetails extends React.Component{
 
                         <div className="form-group col">
                             <label htmlFor="availableToPackage">Package Available</label>
-                            <input type="checkbox"
+                            <input type="text"
                                 id="availableToPackage"
                                 name="availableToPackage"
                                 className="form-control"
@@ -128,7 +151,7 @@ export class ItemDetails extends React.Component{
                         </div>
                     </div>
 
-                    <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.submit() }>Submit</button></Link>
+                    <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.addToInventory() }>Submit</button></Link>
                 </div>
             </form>
         );
