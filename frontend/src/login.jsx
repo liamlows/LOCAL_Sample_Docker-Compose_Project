@@ -6,6 +6,8 @@ export class Login extends React.Component{
     state = {
       username: "",
       password: "",
+      loginCalled: "",
+      passwdcorrect: "",
       };
 
     constructor(props){
@@ -39,8 +41,15 @@ export class Login extends React.Component{
           const values = res.data;
           console.log(values.data);
           this.setState({values: values.data})
+          this.setState({loginCalled: "yes"})
+          if(this.state.values[0].passwd === this.state.password)
+          {
+                this.setState({passwdcorrect: "yes"})
+          }
         });
-    }
+      };
+
+
 
     render(){
         return (
@@ -54,7 +63,8 @@ export class Login extends React.Component{
                                 name="itemID"
                                 className="form-control"
                                 value={this.state.username}
-                                onChange={e => this.setState({ username: e.target.value })}/>
+                                onChange={e => this.setState({ username: e.target.value })}
+                                />
                         </div>
                         <div className="form-group col-9">
                             <label htmlFor="itemName">Password:</label>
@@ -66,13 +76,29 @@ export class Login extends React.Component{
                                 onChange={e => this.setState({ password: e.target.value })}
                                 />
                         </div>
-          <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.login() }>Login</button></Link>
-          <ul>
-            { this.state.values.map((value, i) => <li key={i}>{value.passwd}</li>) }
-          </ul>
-          </div>
-        );
-        //onClick={ () => this.submit() }
-        //<Link to='/inventory'></Link>
+                <button type="button" className="btn btn-primary" onClick={ () => this.login() }>Login</button>
+                { (() => {
+                  if(this.state.loginCalled === "yes"){
+                    if (this.state.passwdcorrect === "yes")
+                {
+                  return (
+                    <div>
+                  <Link to='/inventory'><button type="button" className="btn btn-primary" >Login success! Click Here to go to inventory page.</button></Link>
+                    </div>
+                  )
+                }
+                else{
+                  return (
+                    <div>
+                    <p>Please input correct login credentials</p>
+                    </div>
+                  )
+                }}
+
+
+                } ) ()}
+
+      </div>
+       );
     }
 }

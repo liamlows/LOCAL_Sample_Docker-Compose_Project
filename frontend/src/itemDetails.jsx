@@ -28,7 +28,7 @@ export class ItemDetails extends React.Component{
                   itemDescription : this.state.itemDescription,
                   numInStock : this.state.numInStock,
                   price : this.state.price,
-                  itemType : "kitchen",
+                  itemType : "Kitchen",
                   familySafe : this.state.familySafe,
                   availableToPackage : this.state.availableToPackage
               }).then(
