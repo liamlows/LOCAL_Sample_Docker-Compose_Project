@@ -40,6 +40,7 @@ export class Inventory extends React.Component {
       </ul>
       <button type="button" className="btn btn-primary" onClick={ () => this.getInventory() }>View/Refresh Inventory</button>
       <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
+      <Link to='/warehouseProfile'><button type="button" className="btn btn-primary" >Change Warehouse Information</button></Link>
       <Link to='/login'><button type="button" className="btn btn-primary" >Logout</button></Link>
       </>
     );

@@ -83,7 +83,7 @@ export class Login extends React.Component{
                 {
                   return (
                     <div>
-                  <Link to='/inventory'><button type="button" className="btn btn-primary" >Login success! Click Here to go to inventory page.</button></Link>
+                  <Link to='/inventory'><button type="button" className="btn btn-primary" >Login success! Click here to go to inventory page.</button></Link>
                     </div>
                   )
                 }

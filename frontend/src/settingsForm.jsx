@@ -1,7 +1,8 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 export class SettingsForm extends React.Component{
-    state = {warehouseName: '', 
+    state = {warehouseName: '',
              email: '',
              phoneNumber: '',
              address: '',
@@ -58,7 +59,7 @@ export class SettingsForm extends React.Component{
                             value={this.state.address}
                             onChange={e => this.setState({ address: e.target.value })}/>
                     </div>
-                    
+
                     <div className="form-row">
                         <div className="form-group col">
                             <label htmlFor="city">City</label>
@@ -91,8 +92,10 @@ export class SettingsForm extends React.Component{
                         </div>
                     </div>
 
-
-                    <button type="button" className="btn btn-primary" onClick={ () => this.submit() }>Submit</button>
+                    <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.submit() }>Submit</button></Link>
+                    <div>
+                    <Link to='/inventory'><button type="button" className="btn btn-primary">Cancel</button></Link>
+                    </div>
                 </div>
             </form>
         );

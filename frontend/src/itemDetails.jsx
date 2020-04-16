@@ -151,7 +151,10 @@ export class ItemDetails extends React.Component{
                         </div>
                     </div>
 
+                    <div>
                     <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.addToInventory() }>Submit</button></Link>
+                    </div>
+                    <Link to='/inventory'><button type="button" className="btn btn-primary">Cancel</button></Link>
                 </div>
             </form>
         );

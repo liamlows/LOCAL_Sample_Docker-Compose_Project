@@ -23,6 +23,7 @@ function App() {
         <Route path="/inventory" component={ Inventory} />
           <Route path="/login" component={ Login} />
           <Route path="/itemDetails" component={ItemDetails}/>
+          <Route path="/warehouseProfile" component={SettingsForm}/>
         </Switch>
         </Router>
       </header>
