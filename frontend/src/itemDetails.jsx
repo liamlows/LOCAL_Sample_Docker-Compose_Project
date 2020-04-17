@@ -28,7 +28,7 @@ export class ItemDetails extends React.Component{
                   itemDescription : this.state.itemDescription,
                   numInStock : this.state.numInStock,
                   price : this.state.price,
-                  itemType : "Kitchen",
+                  itemType : this.state.itemType,
                   familySafe : this.state.familySafe,
                   availableToPackage : this.state.availableToPackage
               }).then(
@@ -109,13 +109,13 @@ export class ItemDetails extends React.Component{
                                 className="form-control"
                                 value={this.state.itemType}
                                 onChange={e => this.setState({ itemType: e.target.value })}>
-                                    <option value='Chairs'>Chairs</option>
-                                    <option value='Technology'>Technology</option>
-                                    <option value='Kitchen'>Kitchen</option>
-                                    <option value='Desks'>Desks</option>
-                                    <option value='Appliances'>Appliances</option>
-                                    <option value='Cleaning supplies'>Cleaning Supplies</option>
-                                    <option value='Books'>Books</option>
+                                    <option value="Chairs">Chairs</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Kitchen">Kitchen</option>
+                                    <option value="Desks">Desks</option>
+                                    <option value="Appliances">Appliances</option>
+                                    <option value="Cleaning supplies">Cleaning Supplies</option>
+                                    <option value="Books">Books</option>
                                 </select>
                         </div>
 
