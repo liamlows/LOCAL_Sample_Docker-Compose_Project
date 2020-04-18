@@ -109,18 +109,18 @@ export class ItemDetails extends React.Component{
                                 className="form-control"
                                 value={this.state.itemType}
                                 onChange={e => this.setState({ itemType: e.target.value })}>
-                                    <option value="Chairs">Chairs</option>
-                                    <option value="Technology">Technology</option>
-                                    <option value="Kitchen">Kitchen</option>
-                                    <option value="Desks">Desks</option>
-                                    <option value="Appliances">Appliances</option>
-                                    <option value="Cleaning supplies">Cleaning Supplies</option>
-                                    <option value="Books">Books</option>
+                                    <option value="Living Room">Living Room</option>
+                                    <option value="Bedroom">Bedroom</option>
+                                    <option value="Dining Room">Dining Room</option>
+                                    <option value="Office">Office</option>
+                                    <option value="Outdoor">Outdoor</option>
+                                    <option value="Storage">Storage</option>
+                                    <option value="COVID">COVID</option>
                                 </select>
                         </div>
 
                         <div className="form-group col">
-                            <label htmlFor="state">Family Safe</label>
+                            <label htmlFor="state">Family Safe (yes/no)</label>
                             <input type="text"
                                 id="familySafe"
                                 name="familySafe"
@@ -130,7 +130,7 @@ export class ItemDetails extends React.Component{
                         </div>
 
                         <div className="form-group col">
-                            <label htmlFor="availableToPackage">Package Available</label>
+                            <label htmlFor="availableToPackage">Package Available (yes/no)</label>
                             <input type="text"
                                 id="availableToPackage"
                                 name="availableToPackage"

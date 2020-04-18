@@ -194,7 +194,7 @@ app.put('/warehouseprofile', function (req, res) {
 	var zipcode = req.param('zipcode');
 
 
-	connection.query("UPDATE warehouseProfile SET warehouseName=?, email=?, phoneNumber=?, address=?, city=?, zipcode=? WHERE warehouseName = ?", [warehouseName, email, phoneNumber, address, city, zipcode, warehouseName], function (err, result, fields) {
+	connection.query("UPDATE warehouseProfile SET warehouseName=?, email=?, phoneNumber=?, address=?, city=?, zipcode=? WHERE warehouseID=1", [warehouseName, email, phoneNumber, address, city, zipcode], function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});

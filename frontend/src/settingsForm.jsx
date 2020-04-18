@@ -1,7 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
 
 export class SettingsForm extends React.Component{
+  //should start with values of what is currently in the table
     state = {warehouseName: '',
              email: '',
              phoneNumber: '',
@@ -15,10 +17,61 @@ export class SettingsForm extends React.Component{
         this.setState({warehouseName: '', email: '', phoneNumber: '', address: '', city: '', state: '', zipCode: ''});
     }
 
+    updateProfile = (e) => {
+      axios.put('http://localhost:8000/warehouseprofile',{
+        warehouseName:this.state.warehouseName,
+        email:this.state.email,
+        phoneNumber:this.state.phoneNumber,
+        address:this.state.address,
+        city:this.state.city,
+        zipcode:this.state.zipCode,
+        state:this.state.state
+      }).then(
+        res => {
+          console.log(res);
+          this.getProfile();
+        });
+    }
+
+    constructor(props){
+      super(props);
+      this.state = {
+        values: []
+      };
+    }
+
+    getProfile () {
+      axios.get('http://localhost:8000/warehouseprofile').then(
+        res => {
+          const values = res.data;
+          console.log(values.data);
+          this.setState({values: values.data})
+          this.setState({warehouseName: values.data[0].warehouseName})
+          this.setState({email: values.data[0].email})
+          this.setState({phoneNumber: values.data[0].phoneNumber})
+          this.setState({address: values.data[0].address})
+          this.setState({city: values.data[0].city})
+          this.setState({zipCode: values.data[0].zipcode})
+          this.setState({state: values.data[0].state})
+        });
+    }
+
+
     render(){
         return (
+
             <form className="container">
                 <h3 className="container list-group-item bg-secondary text-white">Change Warehouse Settings</h3>
+
+                <div>
+                <button type="button" className="btn btn-primary" onClick={ () => this.getProfile()}>Show Profile</button>
+                </div>
+
+                <p>{this.state.warehouseName}</p>
+                <p>{this.state.email}  {this.state.phoneNumber}</p>
+                <p>{this.state.address}</p>
+                <p>{this.state.city}  {this.state.state} {this.state.zipCode}</p>
+
                 <div className="list-group-item">
                     <div className="form-group form-row">
                         <label htmlFor="name">Warehouse Name</label>
@@ -92,9 +145,9 @@ export class SettingsForm extends React.Component{
                         </div>
                     </div>
 
-                    <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.submit() }>Submit</button></Link>
+                    <button type="button" className="btn btn-primary" onClick={ () => this.updateProfile() }>Save Changes</button>
                     <div>
-                    <Link to='/inventory'><button type="button" className="btn btn-primary">Cancel</button></Link>
+                    <Link to='/inventory'><button type="button" className="btn btn-primary">Back to Inventory</button></Link>
                     </div>
                 </div>
             </form>
