@@ -44,7 +44,6 @@ app.get('/', (req, res) => {
   res.status(200).send('Go to 0.0.0.0:3000.');
 });
 
-
 //POST /reset
 app.post('/reset', (req, res) => {
   connection.query('drop table if exists test_table', function (err, rows, fields) {
@@ -93,7 +92,6 @@ app.get('/values', (req, res) => {
 //ADDING WAREHOUSE APIS HERE
 
 //GET PASSWORD FOR A USERNAME
-// /users/username
 app.get('/users', (req, res) => {
 	var user = req.param('user');
 	connection.query('SELECT passwd FROM `db`.`users` WHERE username = ?', user, function (err, rows, fields) {
@@ -169,24 +167,24 @@ app.get('/inventory', (req, res) => {
 	});
 });
 
-//Update Item Details
+//UPDATE ITEM DETAILS - requires ID to be passed in
 app.put('/inventory', function (req, res) {
-    var ID = req.param('ID');
+  var itemID = req.param('itemID');
 	var itemName = req.param('itemName');
 	var itemDescription = req.param('itemDescription');
 	var numInStock = req.param('numinStock');
 	var price = req.param('price');
-	var typeID = req.param('typeID');
+	var itemType = req.param('itemType');
 	var familySafe = req.param('familySafe');
-    var availableToPackage = req.param('availableToPackage');
+  var availableToPackage = req.param('availableToPackage');
 
-
-	con.query("UPDATE inventory SET(itemName, itemDescription, numInStock, price, typeID, familySafe, availableToPackage) VALUES (?,?,?,?,?,?,?) WHERE inventory.itemID = ID", [itemName, itemDescription, numInStock, price, typeID, familySafe, availableToPackage], function (err, result, fields) {
+	connection.query("UPDATE inventory SET itemName=?, itemDescription=?, numInStock=?, price=?, itemType=?, familySafe=?, availableToPackage=? WHERE itemID = ?", [itemName, itemDescription, numInStock, price, itemType, familySafe, availableToPackage, itemID], function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});
 });
 
+//UPDATE WAREHOUSE PROFILE
 app.put('/warehouseprofile', function (req, res) {
 	var warehouseName = req.param('warehouseName');
 	var email = req.param('email');
@@ -196,15 +194,51 @@ app.put('/warehouseprofile', function (req, res) {
 	var zipcode = req.param('zipcode');
 
 
-	con.query("UPDATE warehouseprofile SET(warehouseName, email, phoneNumber, address, city, zipcode) VALUES (?,?,?,?,?,?) WHERE warehouseprofile.warehouseName = warehouseName", [warehouseName, email, phoneNumber, address, city, zipcode], function (err, result, fields) {
+	connection.query("UPDATE warehouseProfile SET warehouseName=?, email=?, phoneNumber=?, address=?, city=?, zipcode=? WHERE warehouseName = ?", [warehouseName, email, phoneNumber, address, city, zipcode, warehouseName], function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});
 });
 
+//GET WAREHOUSE PROFILE INFORMATION
+app.get('/warehouseprofile', function (req, res) {
+  connection.query("SELECT * FROM warehouseProfile", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
 
-//GET DETAILS ON SPECIFIC ITEM
+//Returns Customers Table
+app.get('/customers', function (req, res) {
+  connection.query("SELECT * FROM customers", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+//GET DETAILS ON SPECIFIC ITEM - not used yet
 app.get('/inventory/:itemName', (req, res) => {
+
   var itemName = req.param('itemName');
 	connection.query("SELECT * FROM inventory WHERE itemName = ?", itemName, function (err, rows, fields) {
     if (err) {
@@ -221,6 +255,7 @@ app.get('/inventory/:itemName', (req, res) => {
     }
 	});
 });
+
 
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
