@@ -77,6 +77,7 @@ export class Login extends React.Component{
                                 />
                         </div>
                 <button type="button" className="btn btn-primary" onClick={ () => this.login() }>Login</button>
+
                 { (() => {
                   if(this.state.loginCalled === "yes"){
                     if (this.state.passwdcorrect === "yes")

@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
 //For Warehouse settings and adding an item
 import { SettingsForm } from './settingsForm.jsx';
 import { ItemDetails } from './itemDetails.jsx';
+import { NewUser } from './newuser.jsx';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" component={ Login} />
           <Route path="/itemDetails" component={ItemDetails}/>
           <Route path="/warehouseProfile" component={SettingsForm}/>
+          <Route path="/newuser" component={NewUser}/>
         </Switch>
         </Router>
       </header>
