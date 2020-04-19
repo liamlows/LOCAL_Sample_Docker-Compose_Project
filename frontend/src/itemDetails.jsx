@@ -109,9 +109,10 @@ export class ItemDetails extends React.Component{
                                 className="form-control"
                                 value={this.state.itemType}
                                 onChange={e => this.setState({ itemType: e.target.value })}>
-                                    <option value="Living Room">Living Room</option>
+                                    <option value="Unspecified"></option>
+                                    <option value="Living">Living</option>
                                     <option value="Bedroom">Bedroom</option>
-                                    <option value="Dining Room">Dining Room</option>
+                                    <option value="Dining">Dining</option>
                                     <option value="Office">Office</option>
                                     <option value="Outdoor">Outdoor</option>
                                     <option value="Storage">Storage</option>

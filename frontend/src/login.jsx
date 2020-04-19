@@ -54,7 +54,7 @@ export class Login extends React.Component{
     render(){
         return (
           <div>
-            <h3 className="container list-group-item bg-secondary text-white">Login</h3>
+            <h3 className="container list-group-item bg-secondary text-white">Smith Furniture</h3>
 
                         <div className="form-group col-3">
                             <label htmlFor="itemID">Username:</label>

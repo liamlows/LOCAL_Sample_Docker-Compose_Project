@@ -148,7 +148,7 @@ app.post('/inventory', (req, res) => {
   });
 });
 
-//GET ENTIRE INVENTORY LIST
+//GET ENTIRE INVENTORY LIST => change column names
 app.get('/inventory', (req, res) => {
 
 	connection.query("select * from inventory", function (err, rows, fields) {
