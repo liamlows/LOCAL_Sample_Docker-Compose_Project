@@ -70,8 +70,7 @@ export class NewUser extends React.Component{
                             onChange={e => this.setState({ last: e.target.value })}/>
                     </div>
 
-                    <div className="form-row">
-                        <div className="form-group col">
+                        <div className="form-group row">
                             <label htmlFor="city">Password</label>
                             <input type="text"
                                 id="password"
@@ -79,7 +78,6 @@ export class NewUser extends React.Component{
                                 className="form-control"
                                 value={this.state.password}
                                 onChange={e => this.setState({ password: e.target.value })}/>
-                        </div>
 
                     </div>
 

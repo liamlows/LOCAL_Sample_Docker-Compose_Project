@@ -40,7 +40,7 @@ export class GeneralTable extends Component {
                         <thead className="thead-light">
                             <tr>
                                 {
-                                    this.props.showRowHeader && 
+                                    this.props.showRowHeader &&
                                     <th scope="col">#</th>
                                 }
                                 {

@@ -42,9 +42,7 @@ export class Inventory extends React.Component {
       <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
       <Link to='/warehouseProfile'><button type="button" className="btn btn-primary" >Warehouse Profile</button></Link>
       <Link to='/login'><button type="button" className="btn btn-primary" >Logout</button></Link>
-      <div>
-      <Link to='newuser'><button type="button" className="btn btn-primary">New user</button></Link>
-      </div>
+      <div><Link to='newuser'><button type="button" className="btn btn-primary">New user</button></Link> </div>
       </>
     );
   }

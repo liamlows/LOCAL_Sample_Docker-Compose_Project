@@ -56,7 +56,7 @@ export class Login extends React.Component{
           <div>
             <h3 className="container list-group-item bg-secondary text-white">Smith Furniture</h3>
 
-                        <div className="form-group col-3">
+                        <div className="form-group col-18">
                             <label htmlFor="itemID">Username:</label>
                             <input type="text"
                                 id="itemID"
@@ -66,7 +66,7 @@ export class Login extends React.Component{
                                 onChange={e => this.setState({ username: e.target.value })}
                                 />
                         </div>
-                        <div className="form-group col-9">
+                        <div className="form-group col-18">
                             <label htmlFor="itemName">Password:</label>
                             <input type="text"
                                 id="itemName"
