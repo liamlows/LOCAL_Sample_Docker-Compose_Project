@@ -240,7 +240,7 @@ app.get('/customers', function (req, res) {
 app.get('/inventory/:itemName', (req, res) => {
 
   var itemName = req.param('itemName');
-	connection.query("SELECT * FROM inventory WHERE itemName = ?", itemName, function (err, rows, fields) {
+	connection.query("SELECT itemID as ID, itemName as Item, itemDescription as Description, numInStock as Quantity, price as Price, itemType as Category, family safe as [Family Safe?], availableToPackage as [Available to Package] FROM inventory WHERE itemName = ?", itemName, function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query for inventory");
       res.status(400).json({

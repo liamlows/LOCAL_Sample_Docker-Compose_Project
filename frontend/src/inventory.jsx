@@ -12,6 +12,7 @@ export class Inventory extends React.Component {
 
   constructor(props){
     super(props);
+    {this.getInventory()}
     this.state = {
       values: []
     };
@@ -35,7 +36,6 @@ export class Inventory extends React.Component {
       <Link to='newuser'><button type="button" className="btn btn-primary">New user</button></Link>
       </div>
       <div>
-      <button type="button" className="btn btn-primary" onClick={ () => this.getInventory() }>View/Refresh Inventory</button>
       <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
       </div>
       <ul>

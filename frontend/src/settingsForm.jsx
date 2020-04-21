@@ -10,7 +10,8 @@ export class SettingsForm extends React.Component{
              address: '',
              city: '',
              state: '',
-             zipCode: ''};
+             zipCode: ''
+           };
 
     submit(){
         //update database with state
@@ -35,6 +36,7 @@ export class SettingsForm extends React.Component{
 
     constructor(props){
       super(props);
+      {this.getProfile()}
       this.state = {
         values: []
       };
@@ -59,18 +61,27 @@ export class SettingsForm extends React.Component{
 
     render(){
         return (
-
             <form className="container">
                 <h3 className="container list-group-item bg-secondary text-white">Change Warehouse Settings</h3>
 
-                <div>
-                <button type="button" className="btn btn-primary" onClick={ () => this.getProfile()}>Show Profile</button>
-                </div>
+                <div className="list-group-item">
+                    <div className="row">Warehouse Name: {this.state.warehouseName}</div>
 
-                <p>{this.state.warehouseName}</p>
-                <p>{this.state.email}  {this.state.phoneNumber}</p>
-                <p>{this.state.address}</p>
-                <p>{this.state.city}  {this.state.state} {this.state.zipCode}</p>
+                    <div className="row">Email Address: {this.state.email}</div>
+
+                    <div className="row">Phone Number: {this.state.phoneNumber}</div>
+
+                    <div className="row">Street Address: {this.state.address}</div>
+
+                    <div className="row">
+                        <div className="col">City: {this.state.city}</div>
+
+                        <div className="col">State: {this.state.state}</div>
+
+                        <div className="col">Zip Code: {this.state.zipCode}</div>
+                    </div>
+
+                </div>
 
                 <div className="list-group-item">
                     <div className="form-group form-row">
