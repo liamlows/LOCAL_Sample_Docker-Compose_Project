@@ -378,6 +378,24 @@ app.get('/orders', (req, res) => {
 	});
 });
 
+app.get('/orderDetails', (req, res) => {
+  var orderID = req.param('orderID');
+	connection.query("SELECT * FROM orderDetails WHERE orderID = ?", orderID, function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {
   if (e) {
