@@ -361,6 +361,22 @@ app.get('/category', (req, res) => {
 	});
 });
 
+app.get('/orders', (req, res) => {
+	connection.query("select  o.orderID, LEFT(o.orderDate,10) as Date, o.customerID, concat(c.firstName,' ', c.lastName) as Name from orders o INNER JOIN customers c ON o.customerID=c.customerID",function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
 
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {

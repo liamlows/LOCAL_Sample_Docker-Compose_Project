@@ -13,6 +13,7 @@ import { SettingsForm } from './settingsForm.jsx';
 import { ItemDetails } from './itemDetails.jsx';
 import { NewUser } from './newuser.jsx';
 import { UpdateItem } from './updateItem.jsx'
+import { Orders } from './orders.jsx'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/warehouseProfile" component={SettingsForm}/>
           <Route path="/newuser" component={NewUser}/>
           <Route path="/update" component={UpdateItem}/>
+          <Route path="/orders" component={Orders}/>
         </Switch>
         </Router>
       </header>
