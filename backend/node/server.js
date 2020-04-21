@@ -237,10 +237,9 @@ app.get('/customers', function (req, res) {
 });
 
 //GET DETAILS ON SPECIFIC ITEM - not used yet
-app.get('/inventory/:itemName', (req, res) => {
-
-  var itemName = req.param('itemName');
-	connection.query("SELECT itemID as ID, itemName as Item, itemDescription as Description, numInStock as Quantity, price as Price, itemType as Category, family safe as [Family Safe?], availableToPackage as [Available to Package] FROM inventory WHERE itemName = ?", itemName, function (err, rows, fields) {
+app.get('/inventory/:itemID', (req, res) => {
+  var itemID = req.param('itemID');
+	connection.query("SELECT * FROM inventory WHERE itemID = ?", itemID, function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query for inventory");
       res.status(400).json({
@@ -257,7 +256,6 @@ app.get('/inventory/:itemName', (req, res) => {
 });
 
 //APIS FOR SEARCHING
-//GET ENTIRE INVENTORY LIST => change column names
 app.get('/restock', (req, res) => {
 
 	connection.query("select * from inventory WHERE numInStock < 10", function (err, rows, fields) {

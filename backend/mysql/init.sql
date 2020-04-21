@@ -11,16 +11,16 @@ INSERT INTO `db`.`test_table` (`value`) VALUES ('Sample Value');
 
 -- Users table, fix formatting
 CREATE TABLE `db`.`users` (
-userID int NOT NULL AUTO_INCREMENT,
-username varchar(20) NOT NULL,
-passwd varchar(20) NOT NULL,
-email varchar(50),
-firstName varchar(50),
-lastName varchar(50),
-PRIMARY KEY (userid)
+`userID` int NOT NULL AUTO_INCREMENT,
+`username` varchar(20) NOT NULL,
+`passwd` varchar(20) NOT NULL,
+`email` varchar(50),
+`firstName` varchar(50),
+`lastName` varchar(50),
+PRIMARY KEY (`userid`)
 );
 
-INSERT INTO users (username, passwd, email, firstName, lastName) VALUES
+INSERT INTO `db`.`users` (`username`, `passwd`, `email`, `firstName`, `lastName`) VALUES
 ('bsmith', 'password1', 'bsmith@gmail.com','Bob', 'Smith'),
 ('cmartin','password2','cmartin@gmail.com','Clare','Martin'),
 ('bbrown','password3','bbrown@gmail.com','Ben','Brown'),
@@ -28,51 +28,51 @@ INSERT INTO users (username, passwd, email, firstName, lastName) VALUES
 ;
 
 -- Customers Table
-CREATE table IF NOT EXISTS customers (
-customerID int AUTO_INCREMENT PRIMARY KEY,
-firstName varchar(50),
-lastName varchar(50),
-email varchar (100),
-phoneNumber varchar(20),
-address varchar(100),
-city varchar(50),
-zipcode int,
-state varchar(20)
+CREATE table IF NOT EXISTS `db`.`customers` (
+`customerID` int AUTO_INCREMENT PRIMARY KEY,
+`firstName` varchar(50),
+`lastName` varchar(50),
+`email` varchar (100),
+`phoneNumber` varchar(20),
+`address` varchar(100),
+`city` varchar(50),
+`zipcode` int,
+`state` varchar(20)
 );
 
-INSERT INTO customers (firstName,lastName,email,phoneNumber,address,city,zipcode,state) VALUES
+INSERT INTO `db`.`customers` (`firstName`,`lastName`,`email`,`phoneNumber`,`address`,`city`,`zipcode`,`state`) VALUES
 ('Erin','Brown','314-555-1234',	'ebrown@gmail.com','6425 Boaz Lane','Dallas',75205,'TX'),
 ('Mary','Cooper','314-555-1235','mcooper@gmail.com','1 Brookings Drive','St. Louis',62313,'MO'),
 ('George','Jones','314-555-1236','gjones@gmail.com','2201 West End Avenue','Nashville',37235,'Tennessee');
 
 -- Warehouse Profile
-CREATE table IF NOT EXISTS warehouseProfile (
-warehouseID int AUTO_INCREMENT PRIMARY KEY,
-warehouseName varchar(100) NOT NULL,
-email varchar (100),
-phoneNumber varchar(20),
-address varchar(100),
-city varchar(50),
-zipcode int,
-state varchar(20)
+CREATE table IF NOT EXISTS `db`.`warehouseProfile` (
+`warehouseID` int AUTO_INCREMENT PRIMARY KEY,
+`warehouseName` varchar(100) NOT NULL,
+`email varchar` (100),
+`phoneNumber` varchar(20),
+`address` varchar(100),
+`city` varchar(50),
+`zipcode` int,
+`state` varchar(20)
 );
 
-INSERT INTO warehouseProfile (warehouseName,email,phoneNumber,address,city,zipcode,state ) VALUES
+INSERT INTO `db`.`warehouseProfile` (`warehouseName`,`email`,`phoneNumber`,`address`,`city`,`zipcode`,`state`) VALUES
 ('Smith Warehouse','smith@smith.com','(313)-555-4822', '707 Oxford Rd.','Ann Arbor',48104,'MI');
 
 -- Inventory Table
-CREATE table IF NOT EXISTS inventory (
-itemID int AUTO_INCREMENT PRIMARY KEY,
-itemName varchar(100),
-itemDescription varchar(1000),
-numInStock int DEFAULT 0,
-price decimal(10,2) DEFAULT 0,
-itemType varchar(30) NOT NULL,
-familySafe varchar(10),
-availableToPackage varchar(10)
+CREATE table IF NOT EXISTS `db`.`inventory` (
+`itemID` int AUTO_INCREMENT PRIMARY KEY,
+`itemName` varchar(100),
+`itemDescription` varchar(1000),
+`numInStock` int DEFAULT 0,
+`price` decimal(10,2) DEFAULT 0,
+`itemType` varchar(30) NOT NULL,
+`familySafe` varchar(10),
+`availableToPackage` varchar(10)
 );
 
-INSERT INTO inventory (itemName, itemDescription, numInStock, price, itemType, familySafe, availableToPackage) VALUES
+INSERT INTO `db`.`inventory` (`itemName`, `itemDescription`, `numInStock`, `price`, `itemType`, `familySafe`, `availableToPackage`) VALUES
 ('Kellway 3 Piece Sofa','White leather, includes 2 corner wedge pieces and one armless chair',10,804,'Living Room', 'yes','no'),
 ('Olsberg Sofa','Grey upholstery with reversible seat cushions',15,538,	'Living Room','yes','no'),
 ('Leather Power Recline Loveseat','Black leather with built in storage',2,638, 'Living Room','no','no'),
@@ -87,30 +87,30 @@ INSERT INTO inventory (itemName, itemDescription, numInStock, price, itemType, f
 ;
 
 -- Orders Table
-CREATE table IF NOT EXISTS orders (
-orderID int AUTO_INCREMENT PRIMARY KEY,
-customerID int NOT NULL,
-orderDate date NOT NULL,
-FOREIGN KEY(customerID) REFERENCES customers(customerID)
+CREATE table IF NOT EXISTS `db`.`orders` (
+`orderID` int AUTO_INCREMENT PRIMARY KEY,
+`customerID` int NOT NULL,
+`orderDate` date NOT NULL,
+FOREIGN KEY(`customerID`) REFERENCES `db`.`customers`(`customerID`)
 );
 
-INSERT INTO orders (orderDate, customerID) VALUES
+INSERT INTO `db`.`orders` (`orderDate`, `customerID`) VALUES
 ('2020-03-31',	1),
 ('2020-02-20',	3),
 ('2020-02-18',	2)
 ;
 
 -- Order Details Table
-CREATE table orderDetails (
-orderID int,
-itemID int,
-quantity int,
-CONSTRAINT compDetailID PRIMARY KEY (orderID, itemID),
-FOREIGN KEY(orderID) REFERENCES orders(orderID),
-FOREIGN KEY(itemID) REFERENCES inventory(itemID)
+CREATE table `db`.`orderDetails` (
+`orderID` int,
+`itemID` int,
+`quantity` int,
+CONSTRAINT `compDetailID` PRIMARY KEY (`orderID`, `itemID`),
+FOREIGN KEY(`orderID`) REFERENCES `db`.`orders`(`orderID`),
+FOREIGN KEY(`itemID`) REFERENCES `db`.`inventory`(`itemID`)
 );
 
-INSERT INTO orderDetails VALUES
+INSERT INTO `db`.`orderDetails` VALUES
 (1,1,1),
 (1,8,1),
 (2,12,1),

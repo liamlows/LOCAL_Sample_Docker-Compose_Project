@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Switch  } from 'react-router-dom';
 import { SettingsForm } from './settingsForm.jsx';
 import { ItemDetails } from './itemDetails.jsx';
 import { NewUser } from './newuser.jsx';
+import { UpdateItem } from './updateItem.jsx'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/itemDetails" component={ItemDetails}/>
           <Route path="/warehouseProfile" component={SettingsForm}/>
           <Route path="/newuser" component={NewUser}/>
+          <Route path="/update" component={UpdateItem}/>
         </Switch>
         </Router>
       </header>

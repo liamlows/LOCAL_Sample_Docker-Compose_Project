@@ -37,6 +37,7 @@ export class Inventory extends React.Component {
       </div>
       <div>
       <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
+      <Link to='/update'><button type="button" className="btn btn-primary">Update Item</button></Link>
       </div>
       <ul>
         <GeneralTable
