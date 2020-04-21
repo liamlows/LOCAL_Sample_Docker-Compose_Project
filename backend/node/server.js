@@ -256,6 +256,116 @@ app.get('/inventory/:itemName', (req, res) => {
 	});
 });
 
+//APIS FOR SEARCHING
+//GET ENTIRE INVENTORY LIST => change column names
+app.get('/restock', (req, res) => {
+
+	connection.query("select * from inventory WHERE numInStock < 10", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+app.get('/priceasc', (req, res) => {
+
+	connection.query("select * from inventory ORDER BY price", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+app.get('/pricedesc', (req, res) => {
+
+	connection.query("select * from inventory ORDER BY price DESC", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+app.get('/familysafe', (req, res) => {
+
+	connection.query("select * from inventory WHERE familySafe = 'yes'", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+app.get('/package', (req, res) => {
+
+	connection.query("select * from inventory WHERE availableToPackage = 'yes'", function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+app.get('/category', (req, res) => {
+  var category = req.param('category');
+	connection.query("select * from inventory WHERE itemType = ?", category,function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
 
 //connecting the express object to listen on a particular port as defined in the config object.
 app.listen(config.port, config.host, (e) => {

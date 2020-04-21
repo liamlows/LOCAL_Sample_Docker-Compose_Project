@@ -100,6 +100,24 @@ INSERT INTO orders (orderDate, customerID) VALUES
 ('2020-02-18',	2)
 ;
 
+-- Order Details Table
+CREATE table orderDetails (
+orderID int,
+itemID int,
+quantity int,
+CONSTRAINT compDetailID PRIMARY KEY (orderID, itemID),
+FOREIGN KEY(orderID) REFERENCES orders(orderID),
+FOREIGN KEY(itemID) REFERENCES inventory(itemID)
+);
+
+INSERT INTO orderDetails VALUES
+(1,1,1),
+(1,8,1),
+(2,12,1),
+(2,5,2),
+(3,6,2)
+;
+
 -- create user called `manager` with password `Password`
 CREATE USER 'manager'@'%' IDENTIFIED BY 'Password';
 
