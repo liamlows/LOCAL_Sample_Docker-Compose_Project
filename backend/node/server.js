@@ -172,13 +172,10 @@ app.put('/inventory', function (req, res) {
   var itemID = req.param('itemID');
 	var itemName = req.param('itemName');
 	var itemDescription = req.param('itemDescription');
-	var numInStock = req.param('numinStock');
+	var numInStock = req.param('numInStock');
 	var price = req.param('price');
-	var itemType = req.param('itemType');
-	var familySafe = req.param('familySafe');
-  var availableToPackage = req.param('availableToPackage');
 
-	connection.query("UPDATE inventory SET itemName=?, itemDescription=?, numInStock=?, price=?, itemType=?, familySafe=?, availableToPackage=? WHERE itemID = ?", [itemName, itemDescription, numInStock, price, itemType, familySafe, availableToPackage, itemID], function (err, result, fields) {
+	connection.query("UPDATE inventory SET itemName=?, itemDescription=?, numInStock=?, price=? WHERE itemID=?", [itemName, itemDescription, numInStock, price, itemID], function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});
@@ -237,7 +234,7 @@ app.get('/customers', function (req, res) {
 });
 
 //GET DETAILS ON SPECIFIC ITEM - not used yet
-app.get('/inventory/:itemID', (req, res) => {
+app.get('/item', (req, res) => {
   var itemID = req.param('itemID');
 	connection.query("SELECT * FROM inventory WHERE itemID = ?", itemID, function (err, rows, fields) {
     if (err) {

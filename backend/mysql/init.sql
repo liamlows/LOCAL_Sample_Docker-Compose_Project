@@ -79,7 +79,7 @@ INSERT INTO `db`.`inventory` (`itemName`, `itemDescription`, `numInStock`, `pric
 ('Office Desk','Wood desk with drawers',10, 500, 'Office','yes','yes'),
 ('L-Shape Desk','With 2 drawers and built in USB port',20,339, 'Office','yes','no'),
 ('Upholstered Panel Headboard','Expandable from a twin to a king-size bed',10,115, 'Bedroom','yes','yes'),
-('Upholstered Standard Bed','Queen size with button tufted headboard',5,122, 'Bedroom','yes','no'),
+('Upholstered Standard Bed','Queen size with button tufted headboard',5,122,'Bedroom','yes','no'),
 ('Olivia 3 piece Breakfast Nook Dining Set','Solid Pine wood with upholstery',2,600, 'Dining Room','yes','no'),
 ('Wooden Garden Bench','Curved arms and slatted seat',10,123, 'Outdoor','yes','yes'),
 ('5 Tier Shoe Rack','4 open shelves with dense steel mesh',10,109, 'Storage','yes','yes'),

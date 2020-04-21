@@ -12,10 +12,6 @@ export class UpdateItem extends React.Component{
              itemDescription: '',
              numInStock: '',
              price: '',
-             itemType: '',
-             familySafe: '',
-             timeToAssemble: '',
-             availableToPackage: ''
             };
 
             constructor(props){
@@ -27,23 +23,23 @@ export class UpdateItem extends React.Component{
 
             update = (e) => {
               axios.put('http://localhost:8000/inventory',{
-                  itemID: this.state.itemID,
-                  itemName : this.state.itemName,
-                  itemDescription : this.state.itemDescription,
-                  numInStock : this.state.numInStock,
-                  price : this.state.price,
-                  itemType : this.state.itemType,
-                  familySafe : this.state.familySafe,
-                  availableToPackage : this.state.availableToPackage
+                  itemID:this.state.itemID,
+                  itemName:this.state.itemName,
+                  itemDescription:this.state.itemDescription,
+                  numInStock:this.state.numInStock,
+                  price:this.state.price
               }).then(
                 res => {
                   console.log(res);
-                  this.reset();
                 });
             }
 
             getItemDetails () {
-              axios.get('http://localhost:8000/inventory/3',
+              axios.get('http://localhost:8000/item',{
+                params : {
+                  itemID:this.state.itemID
+                }
+              }
               ).then(
                 res => {
                   const values = res.data;
@@ -55,19 +51,6 @@ export class UpdateItem extends React.Component{
                   this.setState({price: values.data[0].price})
                 });
             }
-
-    reset(){
-        //update database with state
-        this.setState({itemID: '',
-                       itemName: '',
-                       itemDescription: '',
-                       numInStock: '',
-                       price: '',
-                       itemType: '',
-                       familySafe: '',
-                       timeToAssemble: '',
-                       availableToPackage: ''});
-    }
 
     render(){
         return (
@@ -83,7 +66,8 @@ export class UpdateItem extends React.Component{
                                 className="form-control"
                                 value={this.state.itemID}
                                 onChange={e => this.setState({ itemID: e.target.value })}
-                                onChange={e => this.getItemDetails()}/>
+                                />
+                                <button type="button" className="btn btn-primary" onClick={ () => this.getItemDetails() }>Find Item</button>
                         </div>
                         <div className="form-group col-9">
                             <label htmlFor="itemName">Item Name</label>
@@ -130,9 +114,9 @@ export class UpdateItem extends React.Component{
                     </div>
 
                     <div>
-                    <Link to='/inventory'><button type="button" className="btn btn-primary" onClick={ () => this.update() }>Submit</button></Link>
+                    <button type="button" className="btn btn-primary" onClick={ () => this.update() }>Save</button>
                     </div>
-                    <Link to='/inventory'><button type="button" className="btn btn-primary">Cancel</button></Link>
+                    <Link to='/inventory'><button type="button" className="btn btn-primary">Back to Inventory</button></Link>
                 </div>
             </form>
         );
