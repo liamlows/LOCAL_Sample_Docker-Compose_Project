@@ -7,7 +7,7 @@ import { GeneralTable } from './generalTable.jsx';
 export class Orders extends React.Component{
   //should start with values of what is currently in the table
     state = {
-      orderID:"",
+      orderID:""
            };
 
 
@@ -16,7 +16,9 @@ export class Orders extends React.Component{
       {this.getOrders()}
       this.state = {
         values: [],
-        details: []
+        details: [],
+        customer: [],
+        display:""
       };
     }
 
@@ -41,11 +43,31 @@ export class Orders extends React.Component{
           console.log(details.data);
           this.setState({details: details.data})
         });
+        this.getCustomerDetails()
+        this.setState({display: "yes"})
     }
 
+    getCustomerDetails () {
+      axios.get('http://localhost:8000/customer',{
+        params : {
+          customerID:this.state.values[this.state.orderID-1].customerID
+        }
+      }
+      ).then(
+        res => {
+          const customer = res.data;
+          console.log(customer.data);
+          this.setState({customer: customer.data})
+        });
+    }
     render(){
         return (
+
           <form className="container">
+          <h1 id = "header">Orders</h1>
+
+          <Link to='/inventory'><button type="button" className="btn btn-primary" >Back to Inventory</button></Link>
+
           <GeneralTable
           items={this.state.values}
           tableClass="table table-bordered table-hover table-sm"
@@ -54,7 +76,7 @@ export class Orders extends React.Component{
           showRowHeader={true}
           />
 
-
+          <p>Order ID:</p>
           <input type="text"
               id="orderID"
               name="orderID"
@@ -62,7 +84,7 @@ export class Orders extends React.Component{
               value={this.state.orderID}
               onChange={e => this.setState({ orderID: e.target.value })}
               />
-              <button type="button" className="btn btn-primary" onClick={ () => this.getOrderDetails() }>View Details</button>
+              <button type="button" className="btn btn-primary" onClick={ () => this.getOrderDetails()} >View Details</button>
 
           <GeneralTable
           items={this.state.details}
@@ -70,6 +92,14 @@ export class Orders extends React.Component{
           emptyMessage=""
           emptyClass="alert alert-primary"
           showRowHeader={true}
+          />
+
+          <GeneralTable
+          items={this.state.customer}
+          tableClass="table table-bordered table-hover table-sm"
+          emptyMessage=""
+          emptyClass="alert alert-primary"
+          showRowHeader={false}
           />
 
           </form>

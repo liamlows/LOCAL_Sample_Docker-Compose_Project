@@ -40,7 +40,7 @@ CREATE table IF NOT EXISTS `db`.`customers` (
 `state` varchar(20)
 );
 
-INSERT INTO `db`.`customers` (`firstName`,`lastName`,`email`,`phoneNumber`,`address`,`city`,`zipcode`,`state`) VALUES
+INSERT INTO `db`.`customers` (`firstName`,`lastName`,`phoneNumber`,`email`,`address`,`city`,`zipcode`,`state`) VALUES
 ('Erin','Brown','314-555-1234',	'ebrown@gmail.com','6425 Boaz Lane','Dallas',75205,'TX'),
 ('Mary','Cooper','314-555-1235','mcooper@gmail.com','1 Brookings Drive','St. Louis',62313,'MO'),
 ('George','Jones','314-555-1236','gjones@gmail.com','2201 West End Avenue','Nashville',37235,'Tennessee');

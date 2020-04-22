@@ -233,6 +233,24 @@ app.get('/customers', function (req, res) {
 	});
 });
 
+app.get('/customer', (req, res) => {
+  var customerID = req.param('customerID');
+	connection.query("SELECT firstName, lastName, email, phoneNumber, address, city, zipcode, state FROM customers WHERE customerID = ?", customerID, function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
 //GET DETAILS ON SPECIFIC ITEM - not used yet
 app.get('/item', (req, res) => {
   var itemID = req.param('itemID');
@@ -344,8 +362,8 @@ app.get('/package', (req, res) => {
 });
 
 app.get('/category', (req, res) => {
-  var category = req.param('category');
-	connection.query("select * from inventory WHERE itemType = ?", category,function (err, rows, fields) {
+  var itemType = req.param('itemType');
+	connection.query("select * from inventory WHERE itemType = ?", itemType,function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query for inventory");
       res.status(400).json({
@@ -380,7 +398,7 @@ app.get('/orders', (req, res) => {
 
 app.get('/orderDetails', (req, res) => {
   var orderID = req.param('orderID');
-	connection.query("SELECT * FROM orderDetails WHERE orderID = ?", orderID, function (err, rows, fields) {
+	connection.query("SELECT od.itemID, i.itemName as Item, od.quantity as Quantity FROM orderDetails od INNER JOIN inventory i ON od.itemID = i.itemID WHERE orderID = ?", orderID, function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query for inventory");
       res.status(400).json({
