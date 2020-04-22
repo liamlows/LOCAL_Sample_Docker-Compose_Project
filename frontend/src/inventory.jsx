@@ -90,6 +90,7 @@ export class Inventory extends React.Component {
                   <option value="COVID">COVID</option>
               </select>
       <button type="button" className="btn btn-primary" onClick={ () => this.getType()}>Apply Filter</button>
+      <button type="button" className="btn btn-primary" onClick={ () => this.getInventory()}>View Full Inventory</button>
       </div>
 
       <ul>
