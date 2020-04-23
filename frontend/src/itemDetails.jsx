@@ -90,7 +90,7 @@ export class ItemDetails extends React.Component{
                         </div>
 
                         <div className="form-group col-4">
-                            <label htmlFor="timeToAssemble">Assembly Time</label>
+                            <label htmlFor="timeToAssemble">Assembly Time(minutes)</label>
                             <input type="text"
                                 id="timeToAssemble"
                                 name="timeToAssemble"

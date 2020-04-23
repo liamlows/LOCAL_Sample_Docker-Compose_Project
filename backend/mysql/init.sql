@@ -1,15 +1,4 @@
--- create table in DB
-CREATE TABLE `db`.`test_table` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `value` VARCHAR(45),
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
-);
-
--- insert sample entry
-INSERT INTO `db`.`test_table` (`value`) VALUES ('Sample Value');
-
--- Users table, fix formatting
+-- Users table
 CREATE TABLE `db`.`users` (
 `userID` int NOT NULL AUTO_INCREMENT,
 `username` varchar(20) NOT NULL,
@@ -83,7 +72,7 @@ INSERT INTO `db`.`inventory` (`itemName`, `itemDescription`, `numInStock`, `pric
 ('Olivia 3 piece Breakfast Nook Dining Set','Solid Pine wood with upholstery',2,600, 'Dining Room','yes','no'),
 ('Wooden Garden Bench','Curved arms and slatted seat',10,123, 'Outdoor','yes','yes'),
 ('5 Tier Shoe Rack','4 open shelves with dense steel mesh',10,109, 'Storage','yes','yes'),
-('N95 Masks','Temporary Item',0,10000, 'COVID','yes','no')
+('N95 Masks','Temporary Item',0,100, 'COVID','yes','no')
 ;
 
 -- Orders Table
@@ -95,9 +84,10 @@ FOREIGN KEY(`customerID`) REFERENCES `db`.`customers`(`customerID`)
 );
 
 INSERT INTO `db`.`orders` (`orderDate`, `customerID`) VALUES
+('2020-02-16',	3),
+('2020-02-18',	2),
 ('2020-03-31',	1),
-('2020-02-20',	3),
-('2020-02-18',	2)
+('2020-04-22',	2)
 ;
 
 -- Order Details Table
@@ -113,9 +103,11 @@ FOREIGN KEY(`itemID`) REFERENCES `db`.`inventory`(`itemID`)
 INSERT INTO `db`.`orderDetails` VALUES
 (1,1,1),
 (1,8,1),
-(2,12,1),
+(2,10,1),
 (2,5,2),
-(3,6,2)
+(3,6,2),
+(4,8,1),
+(4,9,1)
 ;
 
 -- create user called `manager` with password `Password`

@@ -44,53 +44,6 @@ app.get('/', (req, res) => {
   res.status(200).send('Go to 0.0.0.0:3000.');
 });
 
-//POST /reset
-app.post('/reset', (req, res) => {
-  connection.query('drop table if exists test_table', function (err, rows, fields) {
-    if (err)
-      logger.error("Can't drop table");
-  });
-  connection.query('CREATE TABLE `db`.`test_table` (`id` INT NOT NULL AUTO_INCREMENT, `value` VARCHAR(45), PRIMARY KEY (`id`), UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);', function (err, rows, fields) {
-    if (err)
-      logger.error("Problem creating the table test_table");
-  });
-  res.status(200).send('created the table');
-});
-
-//POST /multplynumber
-app.post('/multplynumber', (req, res) => {
-  console.log(req.body.product);
-
-  connection.query('INSERT INTO `db`.`test_table` (`value`) VALUES(\'' + req.body.product + '\')', function (err, rows, fields) {
-    if (err){
-      logger.error("Problem inserting into test table");
-    }
-    else {
-      res.status(200).send(`added ${req.body.product} to the table!`);
-    }
-  });
-});
-
-//GET /checkdb
-app.get('/values', (req, res) => {
-  connection.query('SELECT value FROM `db`.`test_table`', function (err, rows, fields) {
-    if (err) {
-      logger.error("Error while executing Query");
-      res.status(400).json({
-        "data": [],
-        "error": "MySQL error"
-      })
-    }
-    else{
-      res.status(200).json({
-        "data": rows
-      });
-    }
-  });
-});
-
-//ADDING WAREHOUSE APIS HERE
-
 //GET PASSWORD FOR A USERNAME
 app.get('/users', (req, res) => {
 	var user = req.param('user');
@@ -174,8 +127,10 @@ app.put('/inventory', function (req, res) {
 	var itemDescription = req.param('itemDescription');
 	var numInStock = req.param('numInStock');
 	var price = req.param('price');
+  var availableToPackage = req.param('availableToPackage');
+  var familySafe = req.param('familySafe');
 
-	connection.query("UPDATE inventory SET itemName=?, itemDescription=?, numInStock=?, price=? WHERE itemID=?", [itemName, itemDescription, numInStock, price, itemID], function (err, result, fields) {
+	connection.query("UPDATE inventory SET itemName=?, itemDescription=?, numInStock=?, price=?,availableToPackage=?,familySafe=? WHERE itemID=?", [itemName, itemDescription, numInStock, price, availableToPackage, familySafe, itemID], function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});
@@ -380,7 +335,7 @@ app.get('/category', (req, res) => {
 });
 
 app.get('/orders', (req, res) => {
-	connection.query("select  o.orderID, LEFT(o.orderDate,10) as Date, o.customerID, concat(c.firstName,' ', c.lastName) as Name from orders o INNER JOIN customers c ON o.customerID=c.customerID",function (err, rows, fields) {
+	connection.query("select  o.orderID, LEFT(o.orderDate,10) as Date, o.customerID, concat(c.firstName,' ', c.lastName) as Name from orders o INNER JOIN customers c ON o.customerID=c.customerID ORDER BY o.orderDate DESC",function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query for inventory");
       res.status(400).json({

@@ -12,6 +12,8 @@ export class UpdateItem extends React.Component{
              itemDescription: '',
              numInStock: '',
              price: '',
+             availableToPackage:'',
+             familySafe:''
             };
 
             constructor(props){
@@ -27,7 +29,9 @@ export class UpdateItem extends React.Component{
                   itemName:this.state.itemName,
                   itemDescription:this.state.itemDescription,
                   numInStock:this.state.numInStock,
-                  price:this.state.price
+                  price:this.state.price,
+                  availableToPackage:this.state.availableToPackage,
+                  familySafe:this.state.familySafe
               }).then(
                 res => {
                   console.log(res);
@@ -49,6 +53,8 @@ export class UpdateItem extends React.Component{
                   this.setState({itemDescription: values.data[0].itemDescription})
                   this.setState({numInStock: values.data[0].numInStock})
                   this.setState({price: values.data[0].price})
+                  this.setState({familySafe: values.data[0].familySafe})
+                  this.setState({availableToPackage: values.data[0].availableToPackage})
                 });
             }
 
@@ -100,8 +106,30 @@ export class UpdateItem extends React.Component{
                                 value={this.state.price}
                                 onChange={e => this.setState({ price: e.target.value })}/>
                         </div>
+
                     </div>
 
+                    <div>
+                    <div className="form-group col-4">
+                        <label htmlFor="state">Family Safe (yes/no)</label>
+                        <input type="text"
+                            id="familySafe"
+                            name="familySafe"
+                            className="form-control"
+                            value={this.state.familySafe}
+                            onChange={e => this.setState({ familySafe: e.target.value })}/>
+                    </div>
+
+                    <div className="form-group col-4">
+                        <label htmlFor="availableToPackage">Package Available (yes/no)</label>
+                        <input type="text"
+                            id="availableToPackage"
+                            name="availableToPackage"
+                            className="form-control"
+                            value={this.state.availableToPackage}
+                            onChange={e => this.setState({ availableToPackage: e.target.value })}/>
+                    </div>
+                    </div>
                     <div className="form-row">
                         <div className="form-group col-12">
                             <label htmlFor="itemDescription">Description</label>
