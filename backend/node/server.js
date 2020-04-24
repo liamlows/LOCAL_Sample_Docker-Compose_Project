@@ -229,7 +229,7 @@ app.get('/item', (req, res) => {
 //SEARCH FOR ITEM NAME
 app.get('/search', (req, res) => {
   var search = req.param('search');
-	connection.query("SELECT * FROM inventory WHERE itemName LIKE ?", '%' + search + '%', function (err, rows, fields) {
+	connection.query("SELECT * FROM inventory WHERE itemName LIKE ? OR itemDescription LIKE ? OR itemType LIKE ?", ['%' + search + '%','%' + search + '%','%' + search + '%'], function (err, rows, fields) {
     if (err) {
       logger.error("Error while executing Query for inventory");
       res.status(400).json({
