@@ -126,7 +126,7 @@ export class ItemDetails extends React.Component{
                                 id="familySafe"
                                 name="familySafe"
                                 className="form-control"
-                                checked={this.state.familySafe}
+                                value={this.state.familySafe}
                                 onChange={e => this.setState({ familySafe: e.target.value })}/>
                         </div>
 

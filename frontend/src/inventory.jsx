@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 import { GeneralTable } from './generalTable.jsx';
+import { SearchBar } from './searchBar.jsx'
 
 export class Inventory extends React.Component {
   state = {
