@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { GeneralTable } from './generalTable'
+import axios from 'axios';
+
 
 // Takes in labelName, placeholderText and onSearch as props
 // labelName is the name of the label for the search bar
@@ -11,6 +13,19 @@ export class SearchBar extends Component {
     state = {
         items: [],
         searchText: ""
+    }
+
+    onSearch (searchText) {
+      axios.get('http://localhost:8000/search',{
+        params : {
+          search:searchText
+        }
+      }
+      ).then(
+        res => {
+          const values = res.data;
+          console.log(values.data);
+        });
     }
 
     render() {
@@ -40,7 +55,7 @@ export class SearchBar extends Component {
                 <GeneralTable
                     items={this.state.items}
                     tableClass="table table-bordered table-hover table-sm"
-                    emptyMessage="Empty Table"
+                    emptyMessage=""
                     emptyClass="alert alert-primary"
                     showRowHeader={true}
                 />

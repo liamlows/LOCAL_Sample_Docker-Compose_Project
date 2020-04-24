@@ -63,7 +63,7 @@ app.get('/users', (req, res) => {
 	});
 });
 
-//POST NEW USER
+//CREATE A NEW USER
 app.post('/users', (req, res) => {
   var username = req.param('username');
 	var passwd = req.param('passwd');
@@ -81,7 +81,7 @@ app.post('/users', (req, res) => {
   });
 });
 
-//ADD TO INVENTORY
+//ADD AN ITEM TO THE INVENTORY
 app.post('/inventory', (req, res) => {
   var itemName = req.body.itemName;
 	var itemDescription = req.body.itemDescription;
@@ -101,7 +101,7 @@ app.post('/inventory', (req, res) => {
   });
 });
 
-//GET ENTIRE INVENTORY LIST => change column names
+//GET ENTIRE INVENTORY LIST
 app.get('/inventory', (req, res) => {
 
 	connection.query("select * from inventory", function (err, rows, fields) {
@@ -120,7 +120,7 @@ app.get('/inventory', (req, res) => {
 	});
 });
 
-//UPDATE ITEM DETAILS - requires ID to be passed in
+//UPDATE ITEM DETAILS
 app.put('/inventory', function (req, res) {
   var itemID = req.param('itemID');
 	var itemName = req.param('itemName');
@@ -170,7 +170,7 @@ app.get('/warehouseprofile', function (req, res) {
 	});
 });
 
-//Returns Customers Table
+//RETURNS CUSTOMERS TABLE
 app.get('/customers', function (req, res) {
   connection.query("SELECT * FROM customers", function (err, rows, fields) {
     if (err) {
@@ -188,6 +188,7 @@ app.get('/customers', function (req, res) {
 	});
 });
 
+//RETURNS INFORMATION FOR A SPECIFIC CUSTOMER
 app.get('/customer', (req, res) => {
   var customerID = req.param('customerID');
 	connection.query("SELECT firstName, lastName, email, phoneNumber, address, city, zipcode, state FROM customers WHERE customerID = ?", customerID, function (err, rows, fields) {
@@ -225,7 +226,26 @@ app.get('/item', (req, res) => {
 	});
 });
 
-//APIS FOR SEARCHING
+//SEARCH FOR ITEM NAME
+app.get('/search', (req, res) => {
+  var search = req.param('search');
+	connection.query("SELECT * FROM inventory WHERE itemName LIKE ?", '%' + search + '%', function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
+//APIS FOR SEARCHING THE INVENTORY
 app.get('/restock', (req, res) => {
 
 	connection.query("select * from inventory WHERE numInStock < 10", function (err, rows, fields) {
@@ -316,6 +336,7 @@ app.get('/package', (req, res) => {
 	});
 });
 
+//RETURNS INVENTORY FROM A SPECIFIC CATEGORY
 app.get('/category', (req, res) => {
   var itemType = req.param('itemType');
 	connection.query("select * from inventory WHERE itemType = ?", itemType,function (err, rows, fields) {
@@ -334,6 +355,7 @@ app.get('/category', (req, res) => {
 	});
 });
 
+//RETURNS A LIST OF ORDERS FROM MOST RECENT TO LEAST RECENT
 app.get('/orders', (req, res) => {
 	connection.query("select  o.orderID, LEFT(o.orderDate,10) as Date, o.customerID, concat(c.firstName,' ', c.lastName) as Name from orders o INNER JOIN customers c ON o.customerID=c.customerID ORDER BY o.orderDate DESC",function (err, rows, fields) {
     if (err) {
@@ -351,6 +373,7 @@ app.get('/orders', (req, res) => {
 	});
 });
 
+//RETURNS ORDER DETAILS FOR A SPECIFIC ORDER
 app.get('/orderDetails', (req, res) => {
   var orderID = req.param('orderID');
 	connection.query("SELECT od.itemID, i.itemName as Item, od.quantity as Quantity FROM orderDetails od INNER JOIN inventory i ON od.itemID = i.itemID WHERE orderID = ?", orderID, function (err, rows, fields) {

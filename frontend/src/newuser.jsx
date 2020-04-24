@@ -8,7 +8,7 @@ export class NewUser extends React.Component{
              first: '',
              last: '',
              password: '',
-             email: '',
+             email: ''
            };
 
            createUser = (e) => {

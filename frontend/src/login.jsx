@@ -77,6 +77,7 @@ export class Login extends React.Component{
                                 />
                         </div>
                 <button type="button" className="btn btn-primary" onClick={ () => this.login() }>Login</button>
+                <div><Link to='newuser'><button type="button" className="btn btn-primary">New user</button></Link></div>
 
                 { (() => {
                   if(this.state.loginCalled === "yes"){

@@ -9,7 +9,8 @@ import { SearchBar } from './searchBar.jsx'
 export class Inventory extends React.Component {
   state = {
     names: [],
-    itemType:""
+    itemType:"",
+    searchText:""
   };
 
   constructor(props){
@@ -28,22 +29,6 @@ export class Inventory extends React.Component {
       });
   }
 
-      getOrderDetails () {
-        axios.get('http://localhost:8000/orderdetails',{
-          params : {
-            orderID:this.state.orderID
-          }
-        }
-        ).then(
-          res => {
-            const details = res.data;
-            console.log(details.data);
-            this.setState({details: details.data})
-          });
-          this.getCustomerDetails()
-          this.setState({display: "yes"})
-      }
-
       getType () {
         axios.get('http://localhost:8000/category',{
           params : {
@@ -58,6 +43,20 @@ export class Inventory extends React.Component {
           });
       }
 
+      onSearch () {
+        axios.get('http://localhost:8000/search',{
+          params : {
+            search:this.state.searchText
+          }
+        }
+        ).then(
+          res => {
+            const values = res.data;
+            console.log(values.data);
+            this.setState({values:values.data})
+          });
+      }
+
   render() {
     return (
       <>
@@ -65,13 +64,29 @@ export class Inventory extends React.Component {
       <div>
       <Link to='/warehouseProfile'><button type="button" className="btn btn-primary" >Warehouse Profile</button></Link>
       <Link to='/login'><button type="button" className="btn btn-primary" >Logout</button></Link>
-      <Link to='newuser'><button type="button" className="btn btn-primary">New user</button></Link>
       <Link to='/orders'><button type="button" className="btn btn-primary">Orders</button></Link>
       </div>
+
       <div>
       <Link to='/itemDetails'><button type="button" className="btn btn-primary">Add Item to Warehouse</button></Link>
       <Link to='/update'><button type="button" className="btn btn-primary">Update Item</button></Link>
       </div>
+
+      <form class="m-4">
+          <div class="form-group">
+              <label for="textInput">Search for an Item</label>
+              <input type="text"
+                  className="form-control"
+                  id="textInput"
+                  placeholder="Item name"
+                  value={this.state.searchText}
+                  onChange={e => this.setState({ searchText: e.target.value })}
+              ></input>
+          </div>
+          <button type="button"
+              className="btn btn-primary"
+              onClick={() => this.onSearch() }>Search</button>
+      </form>
 
       <div className="form-group col">
           <label htmlFor="itemType">Item Type</label>
