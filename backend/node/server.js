@@ -39,7 +39,7 @@ connection.connect(function (err) {
   logger.info("Connected to the DB!");
 });
 
-//GET /
+//GET
 app.get('/', (req, res) => {
   res.status(200).send('Go to 0.0.0.0:3000.');
 });
@@ -136,6 +136,25 @@ app.put('/inventory', function (req, res) {
 	});
 });
 
+//GET DETAILS ON SPECIFIC ITEM FROM THE INVENTORY
+app.get('/item', (req, res) => {
+  var itemID = req.param('itemID');
+	connection.query("SELECT * FROM inventory WHERE itemID = ?", itemID, function (err, rows, fields) {
+    if (err) {
+      logger.error("Error while executing Query for inventory");
+      res.status(400).json({
+        "data": [],
+        "error": "MySQL error"
+      })
+    }
+    else{
+      res.status(200).json({
+        "data": rows
+      });
+    }
+	});
+});
+
 //UPDATE WAREHOUSE PROFILE
 app.put('/warehouseprofile', function (req, res) {
 	var warehouseName = req.param('warehouseName');
@@ -207,25 +226,7 @@ app.get('/customer', (req, res) => {
 	});
 });
 
-//GET DETAILS ON SPECIFIC ITEM - not used yet
-app.get('/item', (req, res) => {
-  var itemID = req.param('itemID');
-	connection.query("SELECT * FROM inventory WHERE itemID = ?", itemID, function (err, rows, fields) {
-    if (err) {
-      logger.error("Error while executing Query for inventory");
-      res.status(400).json({
-        "data": [],
-        "error": "MySQL error"
-      })
-    }
-    else{
-      res.status(200).json({
-        "data": rows
-      });
-    }
-	});
-});
-
+//ROUTES FOR SEARCH FILTERS
 //SEARCH FOR ITEM NAME
 app.get('/search', (req, res) => {
   var search = req.param('search');
@@ -245,7 +246,7 @@ app.get('/search', (req, res) => {
 	});
 });
 
-//APIS FOR SEARCHING THE INVENTORY
+//RETURNS ITEMS THAT NEED TO BE RESTOCKED
 app.get('/restock', (req, res) => {
 
 	connection.query("select * from inventory WHERE numInStock < 10", function (err, rows, fields) {
@@ -264,6 +265,7 @@ app.get('/restock', (req, res) => {
 	});
 });
 
+//RETURNS INVENTORY FROM PRICE:LOW TO HIGH
 app.get('/priceasc', (req, res) => {
 
 	connection.query("select * from inventory ORDER BY price", function (err, rows, fields) {
@@ -282,6 +284,7 @@ app.get('/priceasc', (req, res) => {
 	});
 });
 
+//RETURNS INVENTORY FROM PRICE:HIGH TO LOW
 app.get('/pricedesc', (req, res) => {
 
 	connection.query("select * from inventory ORDER BY price DESC", function (err, rows, fields) {
@@ -300,6 +303,7 @@ app.get('/pricedesc', (req, res) => {
 	});
 });
 
+//RETURNS ALL FAMILY SAFE ITEMS
 app.get('/familysafe', (req, res) => {
 
 	connection.query("select * from inventory WHERE familySafe = 'yes'", function (err, rows, fields) {
@@ -318,6 +322,7 @@ app.get('/familysafe', (req, res) => {
 	});
 });
 
+//RETURNS ALL ITEMS THAT CAN BE PACKAGED
 app.get('/package', (req, res) => {
 
 	connection.query("select * from inventory WHERE availableToPackage = 'yes'", function (err, rows, fields) {
@@ -389,6 +394,40 @@ app.get('/orderDetails', (req, res) => {
         "data": rows
       });
     }
+	});
+});
+
+//ADD ORDER TO ORDERS TABLE
+app.post('/orders', function (req, res) {
+	var customerID = req.param('customerID');
+	var orderDate = req.param('orderDate');
+
+	connection.query("INSERT INTO orders(customerID, orderDate) VALUES (?,?)", [customerID,orderDate],function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//ADD AN ITEM TO AN EXISTING ORDER
+app.post('/orderdetails', function (req, res) {
+	var orderID = req.param('orderID');
+	var itemID = req.param('itemID');
+	var quantity = req.param('quantity');
+
+	connection.query("INSERT INTO orderDetails(orderID, itemID, quantity) VALUES (?,?,?)", [orderID,itemID,quantity],function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+
+//update the numInStock of the inventory after an order is placed
+app.put('/subtractInventory', function (req, res) {
+	var itemID = req.param('itemID');
+	var subtracted = req.param('subtracted');
+	connection.query("UPDATE inventory SET numInStock = numInStock - ? WHERE inventory.itemID = ?", [subtracted,itemID], function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
 	});
 });
 
