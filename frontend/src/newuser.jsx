@@ -8,10 +8,14 @@ export class NewUser extends React.Component{
              first: '',
              last: '',
              password: '',
-             email: ''
+             email: '',
+             accessCode:'',
+             failed: ''
            };
 
            createUser = (e) => {
+             if(this.state.accessCode === 'ACCESSCODE')
+             {
              axios.post('http://localhost:8000/users',{
                username:this.state.username,
                passwd:this.state.password,
@@ -21,7 +25,12 @@ export class NewUser extends React.Component{
              }).then(
                res => {
                  console.log(res);
+                 this.setState({failed: 'no'});
                });
+             }
+             else{
+               this.setState({failed: 'yes'});
+             }
            }
 
     render(){
@@ -80,14 +89,38 @@ export class NewUser extends React.Component{
                                 onChange={e => this.setState({ password: e.target.value })}/>
 
                     </div>
+                    <div className="form-group row">
+                        <label htmlFor="city">Access Code</label>
+                        <input type="text"
+                            id="accessCode"
+                            name="accessCode"
+                            className="form-control"
+                            value={this.state.accessCode}
+                            onChange={e => this.setState({ accessCode: e.target.value })}/>
 
-                    <Link to='/login'><button type="button" className="btn btn-primary" onClick={ () => this.createUser() }>Create New User</button></Link>
+                </div>
+
+                    <button type="button" className="btn btn-primary" onClick={ () => this.createUser() }>Create New User</button>
                     <div>
-                    <Link to='/inventory'><button type="button" className="btn btn-primary">Cancel</button></Link>
+                    <Link to='/login'><button type="button" className="btn btn-primary">Cancel</button></Link>
+                    </div>
                     </div>
 
+                    { (() => {
+                      if(this.state.failed === "yes"){
+                        return(
+                          <p>Failed to create an account, invalid access code</p>
+                        )}
+                      if(this.state.failed === "no"){
+                        return(
+                          <div>
+                          <p>Account Successfully Created</p>
+                          <Link to='/login'><button type="button" className="btn btn-primary">Click Here to Login</button></Link>
+                          </div>
+                        )
+                        }
+                    } ) ()}
 
-                    </div>
                 </form>
             );
         }
