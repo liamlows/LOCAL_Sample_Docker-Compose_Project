@@ -76,7 +76,7 @@ app.post('/multplynumber', (req, res) => {
 app.get('/values', (req, res) => {
   connection.query('SELECT value FROM `db`.`test_table`', function (err, rows, fields) {
     if (err) {
-      logger.error("Error while executing Query");
+      logger.error("Error while executing Query: \n", err);
       res.status(400).json({
         "data": [],
         "error": "MySQL error"

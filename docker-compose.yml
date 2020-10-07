@@ -27,8 +27,9 @@ services:
     working_dir: /usr/src/app
     # startup command if it takes a long time uncomment line 31 and comment line 30, if you do this 
     #   you must run `yarn` at the package.json level locally prior to starting
-    command: bash -c "yarn && yarn run dev"
+    # command: bash -c "yarn && yarn run dev"
     # command: bash -c "yarn run dev"
+    command: ["bash", "wait-for-it.sh", "backend-db:3306", "--", "yarn", "dev"]
     # map code volumes from local to inside working directory, changes made locally will update into the container
     volumes:
       - ./backend/node:/usr/src/app
@@ -44,15 +45,15 @@ services:
       - frontend
 
   frontend-app:
-    tty: true
+    stdin_open: true
     build: ./frontend
     restart: always
     # working directory in container to place files
     working_dir: /usr/src/app
     # startup command if it takes a long time uncomment line 51 and comment line 50, if you do this 
     #   you must run `yarn` at the package.json level locally prior to starting
-    command: bash -c "yarn && yarn start"
-    # command: bash -c "yarn start"
+    # command: bash -c "yarn && yarn start"
+    command: bash -c "yarn start"
     # map code volumes from local to inside working directory, changes made locally will update into the container
     volumes:
       - ./frontend:/usr/src/app

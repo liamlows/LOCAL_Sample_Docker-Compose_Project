@@ -58,7 +58,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-        <button onClick={this.reset}> Initialize DB </button>
+        <button onClick={this.reset}> Reset DB </button>
           <form onSubmit={this.handleSubmit}>
             <input type="text" value={this.state.number} onChange={this.handleChange}/>
             <br/>
