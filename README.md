@@ -19,3 +19,8 @@ As always make sure to type `docker-compose down` to shut the containers down an
 Hope this helps!
 
 Liam
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
